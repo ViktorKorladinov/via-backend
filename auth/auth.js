@@ -62,9 +62,15 @@ exports.login = async (req, res, next) => {
 
 exports.auth = (req, res, next) => {
     const token = req.cookies["jwt"]
-    console.log(token)
     if (token) {
-        jwt.verify(token, config.secret, {}, (err, decodedToken) => err ? res.status(401).json({message: "Not authorized"}) : next())
+        jwt.verify(token, config.secret, {}, (err, decodedToken) => {
+            if (err) {
+                return res.status(401).json({message: "Not authorized"});
+            } else {
+                res.locals['username'] = decodedToken.username
+                return next();
+            }
+        })
     } else {
         return res.status(401).json({message: "Not authorized, token not available"})
     }

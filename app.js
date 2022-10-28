@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser')
 const {serverPort} = require('./configs/config');
 const connectDB = require("./configs/db");
 const auth = require('./routes/auth');
+const leaderboard = require('./routes/leaderboard');
 
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json())
@@ -22,5 +23,6 @@ process.on('SIGINT', function () {
 });
 
 app.use("/auth", auth)
+app.use("/api/leaderboard", leaderboard)
 
 connectDB().catch(err => console.log(err));
