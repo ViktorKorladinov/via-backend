@@ -16,7 +16,7 @@ function sign(user, username, res, action) {
         res.cookie("jwt", token, {
             httpOnly: true, maxAge: config.expiresIn * 1000,
         });
-        res.status(200).json({
+        res.status(201).json({
             message: `User successfully ${action}`, id: user._id
         })
     }
