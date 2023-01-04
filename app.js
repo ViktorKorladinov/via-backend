@@ -1,15 +1,28 @@
 const express = require('express')
-const app = express()
+const cors = require('cors');
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
-const { serverPort } = require('./configs/config')
+const {serverPort} = require('./configs/config')
 const connectDB = require('./configs/db')
 const auth = require('./routes/auth')
 const leaderboard = require('./routes/leaderboard')
 const swaggerUi = require('swagger-ui-express')
 const swaggerFile = require('./swagger_output.json')
 
-app.use(bodyParser.urlencoded({ extended: true }))
+const app = express()
+const whitelist = ['http://localhost:3000']
+const corsOptions = {
+    credentials: true,
+    origin: function (origin, callback) {
+        if (whitelist.indexOf(origin) !== -1) {
+            callback(null, true)
+        } else {
+            callback(new Error('Not allowed by CORS'))
+        }
+    }
+}
+app.use(cors(corsOptions))
+app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json())
 app.use(cookieParser())
 process.once('SIGUSR2', function () {
@@ -18,12 +31,6 @@ process.once('SIGUSR2', function () {
 
 process.on('SIGINT', function () {
     process.kill(process.pid, 'SIGINT')
-})
-app.use(function (req, res, next) {
-    res.header('Access-Control-Allow-Origin', '*') // update to match the domain you will make the request from
-    res.header('Access-Control-Allow-Headers',
-        'Origin, X-Requested-With, Content-Type, Accept')
-    next()
 })
 app.use('/auth', auth)
 app.use('/api/leaderboard', leaderboard)

@@ -4,6 +4,6 @@ const {add, top} = require("../leaderboard/leaderboard");
 const router = express.Router();
 
 router.route('/add').post(auth, add)
-router.route("/top/:limit?").get(top);
+router.route("/top/:limit?").get(auth,top);
 
 module.exports = router;
