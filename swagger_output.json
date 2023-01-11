@@ -2,8 +2,8 @@
   "swagger": "2.0",
   "info": {
     "version": "1.0.0",
-    "title": "Countries REST API",
-    "description": "Leaderboard & authentication API"
+    "title": "REST API",
+    "description": ""
   },
   "host": "localhost:8182",
   "basePath": "/",
@@ -13,7 +13,7 @@
   "paths": {
     "/auth/register": {
       "post": {
-        "description": "Register a new user",
+        "description": "",
         "parameters": [
           {
             "name": "body",
@@ -22,19 +22,16 @@
               "type": "object",
               "properties": {
                 "username": {
-                  "example": "my_username"
+                  "example": "newuser"
                 },
                 "password": {
-                  "example": "my_password"
+                  "example": "newuser1"
                 }
               }
             }
           }
         ],
         "responses": {
-          "201": {
-            "description": "Created"
-          },
           "400": {
             "description": "Bad Request"
           }
@@ -43,38 +40,38 @@
     },
     "/auth/login": {
       "post": {
-        "description": "Log an existing user in",
+        "description": "",
         "parameters": [
           {
-            "example": "any",
             "name": "body",
             "in": "body",
             "schema": {
               "type": "object",
               "properties": {
                 "username": {
-                  "example": "my_username"
+                  "example": "viastudent"
                 },
                 "password": {
-                  "example": "my_password"
+                  "example": "viavia"
                 }
               }
             }
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
-          },
           "400": {
             "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }
     },
     "/api/leaderboard/add": {
       "post": {
-        "description": "Add a new entry to the leaderboard",
+        "description": "",
+        "security": [],
         "parameters": [
           {
             "name": "body",
@@ -83,15 +80,15 @@
               "type": "object",
               "properties": {
                 "score": {
-                  "example": 5
+                  "example": 4
                 }
               }
             }
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
+          "201": {
+            "description": "Created"
           },
           "400": {
             "description": "Bad Request"
@@ -109,12 +106,16 @@
           {
             "name": "limit?",
             "in": "path",
+            "required": true,
             "type": "string"
           }
         ],
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
           }
         }
       }
