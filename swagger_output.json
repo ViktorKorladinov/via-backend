@@ -2,13 +2,13 @@
   "swagger": "2.0",
   "info": {
     "version": "1.0.0",
-    "title": "REST API",
+    "title": "Map of Europe API",
     "description": ""
   },
-  "host": "localhost:8182",
+  "host": "viktor.jware-virtual.com:8182",
   "basePath": "/",
   "schemes": [
-    "http"
+    "https"
   ],
   "paths": {
     "/auth/register": {
